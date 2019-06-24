@@ -1,73 +1,80 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-
 describe Puppet::Type.type(:xmlfile) do
-  let(:testobject) {  Puppet::Type.type(:xmlfile) }
-  
+  let(:testobject) { Puppet::Type.type(:xmlfile) }
+
   # Test each of the inherited params and properties to ensure
   # validations are properly inherited.
   describe :path do
-    it "should be fully-qualified" do
+    it 'is fully-qualified' do
       expect {
         testobject.new(
-          :name   => 'foo',
-          :path   => 'my/path',
-      )}.to raise_error(Puppet::Error, /paths must be fully qualified/)
+          name: 'foo',
+          path: 'my/path',
+        )
+      }.to raise_error(Puppet::Error, %r{paths must be fully qualified})
     end
-  end 
-  
+  end
+
   describe :ctime do
-    it "should be read-only" do
+    it 'is read-only' do
       expect {
         testobject.new(
-          :name   => 'foo',
-          :path   => '/my/path',
-          :ctime  => 'somevalue',
-      )}.to raise_error(Puppet::Error, /read-only/)
+          name: 'foo',
+          path: '/my/path',
+          ctime: 'somevalue',
+        )
+      }.to raise_error(Puppet::Error, %r{read-only})
     end
-  end 
-  
+  end
+
   describe :mtime do
-    it "should be read-only" do
+    it 'is read-only' do
       expect {
         testobject.new(
-          :name   => 'foo',
-          :path   => '/my/path',
-          :mtime  => 'somevalue',
-      )}.to raise_error(Puppet::Error, /read-only/)
+          name: 'foo',
+          path: '/my/path',
+          mtime: 'somevalue',
+        )
+      }.to raise_error(Puppet::Error, %r{read-only})
     end
-  end 
-  
+  end
+
   describe :group do
-    it "should not accept empty values" do
+    it 'does not accept empty values' do
       expect {
         testobject.new(
-         :name   => 'foo',
-         :path   => '/my/path',
-         :group  => '',
-      )}.to raise_error(Puppet::Error, /Invalid group name/)  
+          name: 'foo',
+          path: '/my/path',
+          group: '',
+        )
+      }.to raise_error(Puppet::Error, %r{Invalid group name})
     end
   end
-  
+
   describe :mode do
-    it "should perform validations" do
+    it 'performs validations' do
       expect {
         testobject.new(
-         :name   => 'foo',
-         :path   => '/my/path',
-         :mode   => 'fghl',
-      )}.to raise_error(Puppet::Error, /file mode specification is invalid/)  
+          name: 'foo',
+          path: '/my/path',
+          mode: 'fghl',
+        )
+      }.to raise_error(Puppet::Error, %r{file mode specification is invalid})
     end
   end
-  
+
   describe :source do
-    it "should not accept a relative URL" do
+    it 'does not accept a relative URL' do
       expect {
         testobject.new(
-         :name   => 'foo',
-         :path   => '/my/path',
-         :source => 'modules/puppet/file',
-      )}.to raise_error(Puppet::Error, /Cannot use relative URLs/)  
+          name: 'foo',
+          path: '/my/path',
+          source: 'modules/puppet/file',
+        )
+      }.to raise_error(Puppet::Error, %r{Cannot use relative URLs})
     end
   end
 end

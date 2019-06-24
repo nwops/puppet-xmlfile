@@ -7,7 +7,7 @@ describe Puppet::Type.type(:xmlfile) do
 
   # Test each of the inherited params and properties to ensure
   # validations are properly inherited.
-  describe :path do
+  describe 'path' do
     it 'is fully-qualified' do
       expect {
         testobject.new(
@@ -18,7 +18,7 @@ describe Puppet::Type.type(:xmlfile) do
     end
   end
 
-  describe :ctime do
+  describe 'ctime' do
     it 'is read-only' do
       expect {
         testobject.new(
@@ -30,7 +30,7 @@ describe Puppet::Type.type(:xmlfile) do
     end
   end
 
-  describe :mtime do
+  describe 'mtime' do
     it 'is read-only' do
       expect {
         testobject.new(
@@ -42,7 +42,7 @@ describe Puppet::Type.type(:xmlfile) do
     end
   end
 
-  describe :group do
+  describe 'group' do
     it 'does not accept empty values' do
       expect {
         testobject.new(
@@ -54,7 +54,7 @@ describe Puppet::Type.type(:xmlfile) do
     end
   end
 
-  describe :mode do
+  describe 'mode' do
     it 'performs validations' do
       expect {
         testobject.new(
@@ -66,7 +66,7 @@ describe Puppet::Type.type(:xmlfile) do
     end
   end
 
-  describe :source do
+  describe 'source' do
     it 'does not accept a relative URL' do
       expect {
         testobject.new(

@@ -4,14 +4,11 @@ require 'spec_helper'
 require 'puppet/provider/xmlfile/lens'
 require 'puppet/util/diff'
 
-describe XmlLens do
+describe 'XmlLens' do
   let(:testobject) { described_class }
 
-  # Build out tests as we come up with comparisons to augeas
-  before(:all) do
-    # Initialize our content as the default activemq xml file as it
-    # has most of the appropriate xml warts(and is why we wrote this).
-    @content = <<-'EOT'
+  let(:content) do
+    <<-'EOT'
 <beans
   xmlns="http://www.springframework.org/schema/beans"
   xmlns:amq="http://activemq.apache.org/schema/core"
@@ -79,7 +76,16 @@ describe XmlLens do
 
 </beans>
     EOT
-    @rexml = REXML::Document.new(@content)
+  end
+
+  let(:rexml) do
+    REXML::Document.new(content)
+  end
+
+  # Build out tests as we come up with comparisons to augeas
+  before(:all) do
+    # Initialize our content as the default activemq xml file as it
+    # has most of the appropriate xml warts(and is why we wrote this).
   end
 
   after(:all) do
@@ -87,10 +93,7 @@ describe XmlLens do
     # File.unlink("/tmp/xmllens_test.tmp")
   end
 
-  describe :add do
-  end
-
-  describe :set do
+  describe 'set' do
     it 'tests things' do
       Puppet::Util::Storage.stubs(:store)
 
@@ -99,7 +102,7 @@ describe XmlLens do
       xmllens_changes = ["set /#{changes}"]
 
       puppet_test = File.open('/tmp/puppet', 'w+')
-      @rexml.write(puppet_test)
+      rexml.write(puppet_test)
       puppet_test.close
 
       resource = Puppet::Type.type(:augeas).new(
@@ -114,7 +117,7 @@ describe XmlLens do
 
       catalog.apply
 
-      test = described_class.new(@rexml, xmllens_changes, nil)
+      test = described_class.new(rexml, xmllens_changes, nil)
       # test.evaluate.write($stdout)
 
       # puts File.read(puppet_test)
@@ -123,7 +126,9 @@ describe XmlLens do
     end
   end
 
-  describe :rm do
-    it 'should create identical output to augeas'
+  describe 'rm' do
+    it 'should create identical output to augeas' do
+
+    end
   end
 end

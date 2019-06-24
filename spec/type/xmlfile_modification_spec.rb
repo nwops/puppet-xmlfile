@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Puppet::Type.type(:xmlfile_modification) do
   let(:testobject) { Puppet::Type.type(:xmlfile_modification) }
 
-  describe :file do
+  describe 'file' do
     it 'is a fully-qualified path' do
       expect {
         testobject.new(
@@ -17,7 +17,7 @@ describe Puppet::Type.type(:xmlfile_modification) do
     it 'should be required'
   end
 
-  describe :changes do
+  describe 'changes' do
     it 'requires a fully-qualified xpath' do
       expect {
         testobject.new(
@@ -60,7 +60,7 @@ describe Puppet::Type.type(:xmlfile_modification) do
     end
   end
 
-  describe :onlyif do
+  describe 'onlyif' do
     it 'requires a fully-qualified xpath' do
       expect {
         testobject.new(

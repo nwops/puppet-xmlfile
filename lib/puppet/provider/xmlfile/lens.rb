@@ -11,26 +11,11 @@ class XmlLens
     @xml = xml
     @operations = []
     @validations = []
-
-    # Initialize our ops and validations
-    # these get batched and executed en-masse
-    unless changes.nil?
-      if changes.is_a? Array
-        changes.each { |change| parser(change) }
-      elsif changes.is_a? String
-        parser(changes)
-      else
-        raise ArgumentError
-      end
-    end
-
-    unless conditions.nil?
-      if conditions.is_a? Array
-        conditions.each { |condition| parser(condition) }
-      elsif conditions.is_a? String
-        parser(conditions)
-      end
-    end
+    changes ||= []
+    conditions ||= []
+    # convert to array first
+    Array(changes).each { |change| parser(change) }
+    Array(conditions).each { |condition| parser(condition) }
   end
 
   # Wrap around XPath.match
